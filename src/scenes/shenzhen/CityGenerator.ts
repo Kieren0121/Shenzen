@@ -351,7 +351,7 @@ export function generateCity(archetypes: Map<string, Archetype>): CityPlan {
       }
       case 'landmark': {
         addBuilding('landmarkA', (b.x0 + b.x1) / 2, (b.z0 + b.z1) / 2 + 10, 0, 2009.5, [0.6, 0.6, 0.6]);
-        addBuilding('mall', (b.x0 + b.x1) / 2, b.z0 + 40, 0, 2006, PALETTE.office[0]);
+        for (let x = b.x0 + 5; x < b.x1; x += 16) addTree(x, b.z0 + 4, 2014, 0.8);
         break;
       }
     }
@@ -362,7 +362,14 @@ export function generateCity(archetypes: Map<string, Archetype>): CityPlan {
       ?? blocks.find((b) => b.zone === 'oldtown');
     if (lb) {
       lb.kind = 'landmark';
-      addBuilding('landmarkB', (lb.x0 + lb.x1) / 2, (lb.z0 + lb.z1) / 2, 0, 2007, PALETTE.glass[1]);
+      const lm = addBuilding('landmarkB', (lb.x0 + lb.x1) / 2, (lb.z0 + lb.z1) / 2, 0, 2007, PALETTE.glass[1]);
+      // earlier towers on this plot are demolished first (urban redevelopment)
+      for (const r of buildings) {
+        if (r === lm || r.life[0] >= 2007) continue;
+        if (r.x < lb.x0 - 10 || r.x > lb.x1 + 10 || r.z < lb.z0 - 10 || r.z > lb.z1 + 10) continue;
+        r.life[2] = Math.min(r.life[2], 2005.4);
+        r.life[3] = Math.min(r.life[3], 2006.0);
+      }
     }
   }
 
@@ -433,6 +440,7 @@ export function generateCity(archetypes: Map<string, Archetype>): CityPlan {
   // ------------------------------------------------------------ OLD structures (removed only when something new needs the space)
   const clearYearFor = (x: number, z: number, hx: number, hz: number): number => {
     let t = occ.earliest(x - hx - 2, z - hz - 2, x + hx + 2, z + hz + 2) - 0.7;
+    if (!Number.isFinite(t)) t = NEVER; // never redeveloped (Infinity would become NaN on the GPU)
     // site clearance: whole block is cleared before development (except organically rebuilt areas)
     for (const b of blocks) {
       if (x < b.x0 - 8 || x > b.x1 + 8 || z < b.z0 - 8 || z > b.z1 + 8) continue;
@@ -446,11 +454,11 @@ export function generateCity(archetypes: Map<string, Archetype>): CityPlan {
   for (const v of villages) {
     villageMask.push(v);
     const rot = vr.chance(0.5) ? 0 : 0.12;
-    for (let gx = -v.r; gx <= v.r; gx += 15) {
+    for (let gx = -v.r; gx <= v.r; gx += 18) {
       for (let gz = -v.r; gz <= v.r; gz += 16) {
         if (Math.hypot(gx, gz) > v.r * (0.75 + 0.25 * fbm(gx * 0.02, gz * 0.02, 2, 9))) continue;
         if (!vr.chance(0.72)) continue;
-        const x = v.x + gx + vr.range(-2, 2), z = v.z + gz + vr.range(-2, 2);
+        const x = v.x + gx + vr.range(-1.5, 1.5), z = v.z + gz + vr.range(-1.5, 1.5);
         if (landDistance(x, z) < 30) continue;
         const arch = vr.pick(['village0', 'village0', 'village1', 'village2']);
         const s = size(arch);
@@ -465,7 +473,7 @@ export function generateCity(archetypes: Map<string, Archetype>): CityPlan {
       const a = vr.range(0, Math.PI * 2), d = v.r * vr.range(0.9, 1.7);
       const x = v.x + Math.cos(a) * d, z = v.z + Math.sin(a) * d;
       if (landDistance(x, z) < 20) continue;
-      const rem = clearYearFor(x, z, 3, 3);
+      const rem = Math.min(NEVER, clearYearFor(x, z, 3, 3));
       trees.push({ x, z, scale: vr.range(0.9, 1.3), rot: vr.range(0, 6.28), life: [1960, 1960.5, rem, rem + 0.6], tint: vr.pick(PALETTE.foliage), seed: vr.next() });
     }
   }
@@ -498,7 +506,7 @@ export function generateCity(archetypes: Map<string, Archetype>): CityPlan {
       if (!fr.chance(dens)) continue;
       // keep the 3D forest to the hills nearer the city (the ground shader paints the rest)
       if (hill && (pz < -3600 || Math.abs(px) > 5000)) continue;
-      const rem = hill ? NEVER : clearYearFor(px, pz, 3, 3);
+      const rem = hill ? NEVER : Math.min(NEVER, clearYearFor(px, pz, 3, 3));
       if (Math.abs(px - RAIL_X) < 20) continue;
       trees.push({ x: px, z: pz, scale: hill ? fr.range(1.0, 1.6) : fr.range(0.8, 1.2), rot: fr.range(0, 6.28), life: [1960, 1960.5, rem, rem + 0.6], tint: fr.pick(PALETTE.foliage), seed: fr.next() });
     }

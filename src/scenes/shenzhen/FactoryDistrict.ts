@@ -25,7 +25,7 @@ export function fillIndustrialMulti(b: Block, ctx: FillContext): void {
         const a = ctx.addBuilding(rng.pick(['indm4', 'indm5', 'indm5', 'indm6']), x, z - 3, 0, start, rng.pick(PALETTE.factoryTile));
         if (a) {
           const n = rng.int(0, 2);
-          for (let k = 0; k < n; k++) ctx.addBuilding('truck', x - 18 + k * 20 + rng.range(-3, 3), z + 13.5, 0, a.life[1] + rng.range(0, 3), [0.8, 0.8, 0.8]);
+          for (let k = 0; k < n; k++) ctx.addBuilding('truck', x - 18 + k * 20 + rng.range(-1.5, 1.5), z + 13.5, 0, a.life[1] + rng.range(0, 3), [0.8, 0.8, 0.8]);
         }
       }
     }

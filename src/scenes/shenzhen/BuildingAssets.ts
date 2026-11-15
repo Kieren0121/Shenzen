@@ -451,7 +451,7 @@ function make(key: string, b: GeometryBuilder, w: number, d: number, rise: numbe
 export function createArchetypes(): Map<string, Archetype> {
   const A = new Map<string, Archetype>();
   const add = (a: Archetype) => A.set(a.key, a);
-  add(make('village0', villageHouse(0), 13, 10, RISE.FADE, 'village'));
+  add(make('village0', villageHouse(0), 13.4, 10, RISE.FADE, 'village'));
   add(make('village1', villageHouse(1), 8, 10, RISE.FADE, 'village'));
   add(make('village2', villageHouse(2), 9, 12, RISE.FADE, 'village'));
   for (const f of [3, 4, 5]) add(make(`old${f}`, oldLowrise(f), 18, 16, RISE.BUILD, 'old'));
@@ -472,7 +472,7 @@ export function createArchetypes(): Map<string, Archetype> {
   add(make('landmarkB', landmarkB(), 90, 76, RISE.BUILD, 'commercial'));
   add(make('mall', mall(), 90, 64, RISE.BUILD, 'commercial'));
   for (const t of [2, 3, 4]) add(make(`cblock${t}`, containerBlock(t), 37, 10, RISE.FADE, 'port'));
-  add(make('sts', stsCrane(), 22, 120, RISE.BUILD, 'port'));
+  add(make('sts', stsCrane(), 22, 34, RISE.BUILD, 'port')); // footprint = legs; the boom passes overhead
   add(make('ship230', ship(230, 5), 230, 32, RISE.FADE, 'port'));
   add(make('ship300', ship(300, 7), 300, 32, RISE.FADE, 'port'));
   add(make('truck', truck(), 16, 2.6, RISE.FADE, 'vehicle'));

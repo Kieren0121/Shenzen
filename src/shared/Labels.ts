@@ -143,17 +143,27 @@ export class LabelLayer {
         e.h = box.offsetHeight;
       }
       const stem = e.spec.stem ?? 34;
-      const x0 = c.x - e.w / 2, x1 = c.x + e.w / 2;
-      const y1 = c.y - stem, y0 = y1 - e.h;
       const pad = 6;
-      const overlaps = placed.some((r) => !(x1 + pad < r.x0 || x0 - pad > r.x1 || y1 + pad < r.y0 || y0 - pad > r.y1));
+      const fits = (x0: number, y0: number, x1: number, y1: number) =>
+        y0 >= 64 && x0 >= 4 && x1 <= width - 4 && y1 <= height - 4 &&
+        !placed.some((r) => !(x1 + pad < r.x0 || x0 - pad > r.x1 || y1 + pad < r.y0 || y0 - pad > r.y1));
       const dotHidden = placed.some((r) => c.x > r.x0 && c.x < r.x1 && c.y > r.y0 && c.y < r.y1);
-      if (overlaps || dotHidden || y0 < 64 || x0 < 4 || x1 > width - 4) {
+      const x0 = c.x - e.w / 2, x1 = c.x + e.w / 2;
+      // prefer above the anchor; flip below it if that space is taken
+      let below = false;
+      let y1 = c.y - stem, y0 = y1 - e.h;
+      if (!fits(x0, y0, x1, y1)) {
+        below = true;
+        y0 = c.y + stem;
+        y1 = y0 + e.h;
+      }
+      if (dotHidden || !fits(x0, y0, x1, y1)) {
         this.hide(e);
         continue;
       }
       placed.push({ x0, y0, x1, y1 });
       e.el.style.transform = `translate3d(${c.x.toFixed(1)}px, ${c.y.toFixed(1)}px, 0)`;
+      e.el.classList.toggle('below', below);
       if (!e.shown) {
         e.el.classList.add('shown');
         e.shown = true;
