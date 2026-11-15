@@ -33,6 +33,8 @@ export class Application {
   private pointer = new THREE.Vector2();
   private frameCount = 0;
   private switchCount = 0;
+  /** Main-thread cost of a frame (scene update + labels + render submission), ms. */
+  private cpuMs: number[] = [];
 
   constructor(root: HTMLElement, private factories: SceneFactory[]) {
     this.ui = new PresentationUI(root);
@@ -135,6 +137,7 @@ export class Application {
   private frame(dt: number, time: number): void {
     const s = this.active;
     if (!s) return;
+    const t0 = performance.now();
     this.perf.tick(dt);
     s.update(dt, time);
     this.camCtl.update(dt);
@@ -145,6 +148,8 @@ export class Application {
     }
     this.renderer.render(s.scene, s.camera);
     this.frameCount++;
+    this.cpuMs.push(performance.now() - t0);
+    if (this.cpuMs.length > 300) this.cpuMs.shift();
   }
 
   private resize(): void {
@@ -270,6 +275,7 @@ export class Application {
         render: app.renderer.info.render,
         programs: app.renderer.info.programs?.length ?? 0,
         jsHeap: (performance as unknown as { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null,
+        cpuFrameMs: app.cpuMs.length ? [...app.cpuMs].sort((a, b) => a - b)[Math.floor(app.cpuMs.length / 2)] : null,
       }),
       resetPerf: () => app.perf.resetSamples(),
       setAdaptive: (on: boolean) => {
