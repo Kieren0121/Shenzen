@@ -299,8 +299,8 @@ export class GroundwaterScene implements TeachingScene {
     const A = wellDisplay(0), B = wellDisplay(1);
     const L = this.labels;
     L.add({ id: 'rain', text: 'Rain soaks in', sub: 'some rain becomes groundwater', kind: 'green', anchor: () => V(-6, surfaceHeight(-6, 60) - 3.2, FRONT), priority: 7, stem: 36 });
-    L.add({ id: 'unsat', text: 'Unsaturated zone', sub: 'air in the gaps', kind: 'muted', anchor: () => V(-66, (surfaceHeight(-66, 60) - 1.5 + this.headDisplay(-66, 60)) / 2, FRONT), priority: 6, stem: 26 });
-    L.add({ id: 'wt', text: 'Water table', kind: 'water', anchor: () => V(R, this.headDisplay(R, 38), 38), priority: 9, stem: 30 });
+    L.add({ id: 'unsat', text: 'Unsaturated zone', sub: 'air in the gaps', kind: 'muted', anchor: () => V(-84, (surfaceHeight(-84, 60) - 1.5 + this.headDisplay(-84, 60)) / 2, FRONT), priority: 8, stem: 26 });
+    L.add({ id: 'wt', text: 'Water table', kind: 'water', anchor: () => V(57, this.headDisplay(57, 60), FRONT), priority: 9, stem: 30 });
     L.add({ id: 'gw', text: 'Groundwater', sub: 'water fills the gaps (saturated zone)', kind: 'water', anchor: () => V(14, (this.headDisplay(14, 60) + AQUIFER.baseElevation) / 2 - 2, FRONT), priority: 8, stem: 26 });
     L.add({ id: 'rock', text: 'Clay and rock', sub: 'water cannot soak through', kind: 'muted', anchor: () => V(-14, 6, FRONT), priority: 4, stem: 22 });
     L.add({ id: 'lens', text: 'Close-up', sub: 'water in the gaps between grains', kind: 'water', anchor: () => V(76, 38.5 + 8.7, FRONT), priority: 6, stem: 16 });
@@ -308,7 +308,7 @@ export class GroundwaterScene implements TeachingScene {
     L.add({ id: 'wellA', text: 'Well A', sub: 'shallow · 15 m deep', anchor: () => V(A.x, surfaceHeight(A.x, 60) + 4, 58.5), priority: 8, stem: 30 });
     L.add({ id: 'wellB', text: 'Well B', sub: 'deep · 32 m deep', anchor: () => V(B.x, surfaceHeight(B.x, 60) + 4, 58.5), priority: 8, stem: 30 });
     L.add({ id: 'pump', text: 'Pump', sub: 'pulls water up', kind: 'pump', anchor: () => V(B.x, WELLS[1].intake + 1.2, FRONT), visible: () => s.wells[1].rate > 0, priority: 7, stem: 24 });
-    L.add({ id: 'dryA', text: 'WELL HAS RUN DRY', sub: 'water table below the pump', kind: 'warn', anchor: () => V(A.x, WELLS[0].intake + 1.0, FRONT), visible: () => s.wells[0].dry, priority: 20, stem: 46 });
+    L.add({ id: 'dryA', text: 'WELL HAS RUN DRY', sub: 'Well A: water table below the pump', kind: 'warn', anchor: () => V(A.x, WELLS[0].intake + 1.0, FRONT), visible: () => s.wells[0].dry, priority: 20, stem: 46 });
     L.add({ id: 'dryB', text: 'WELL HAS RUN DRY', kind: 'warn', anchor: () => V(B.x, WELLS[1].intake + 1.0, FRONT), visible: () => s.wells[1].dry, priority: 19, stem: 40 });
     L.add({ id: 'homes', text: 'Homes', kind: 'muted', anchor: () => this.surface.anchors.homes, priority: 3 });
     L.add({ id: 'farm', text: 'Farm', sub: 'wheat fields', kind: 'muted', anchor: () => this.surface.anchors.farm, priority: 3 });

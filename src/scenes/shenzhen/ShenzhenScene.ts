@@ -317,6 +317,7 @@ export class ShenzhenScene implements TeachingScene {
     this.highlightTweens.residential.start(id === 'housing' ? 0.55 : 0, 0.8);
     this.migrationTween.start(id === 'housing' ? 1 : 0, 0.8);
     this.updatePlayButton();
+    this.updateUI(); // caption changes immediately, not on the next frame
   }
 
   togglePlay(): void {

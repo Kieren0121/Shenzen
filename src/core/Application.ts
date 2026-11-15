@@ -184,6 +184,8 @@ export class Application {
     document.addEventListener('fullscreenchange', () => {
       this.fullscreenActive = !!document.fullscreenElement;
       if (!this.fullscreenActive && this.presenting) this.setPresenting(false);
+      // a full-screen request that completes after presentation was cancelled is undone
+      if (this.fullscreenActive && !this.presenting) document.exitFullscreen().catch(() => undefined);
     });
   }
 
@@ -241,7 +243,9 @@ export class Application {
         this.ui.toast('Presentation mode on. Press F11 for full screen.');
         return;
       }
-      req({ navigationUI: 'hide' }).catch(() => {
+      req({ navigationUI: 'hide' }).then(() => {
+        if (!this.presenting && document.fullscreenElement) document.exitFullscreen().catch(() => undefined);
+      }).catch(() => {
         this.ui.toast('The browser blocked full screen. Presentation mode is on — press F11 for full screen.', 5000);
       });
     } else if (document.fullscreenElement) {
