@@ -1,0 +1,22 @@
+{
+  "name": "ebn-geography-china-week3-3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EBN Geography China Week 3 - offline 3D teaching application (Shenzhen growth + groundwater over-abstraction)",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "node build/build.mjs",
+    "test:model": "node build/run-unit-tests.mjs",
+    "test:e2e": "node tests/e2e.mjs",
+    "test": "npm run typecheck && npm run test:model && npm run build && npm run test:e2e"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.170.0",
+    "esbuild": "0.24.0",
+    "typescript": "5.6.3"
+  }
+}
