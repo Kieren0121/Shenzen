@@ -246,7 +246,7 @@ export class Application {
       req({ navigationUI: 'hide' }).then(() => {
         if (!this.presenting && document.fullscreenElement) document.exitFullscreen().catch(() => undefined);
       }).catch(() => {
-        this.ui.toast('The browser blocked full screen. Presentation mode is on — press F11 for full screen.', 5000);
+        this.ui.toast('The browser blocked full screen. Presentation mode is on: press F11 for full screen.', 5000);
       });
     } else if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => undefined);

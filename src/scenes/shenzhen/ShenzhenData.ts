@@ -6,7 +6,7 @@
  * between 1980 and 2020 in the 3D model is an illustrative visual
  * progression, and is labelled as such in the interface.
  */
-import type { KeyWord } from '../../core/PresentationUI';
+import type { KeyWord, TaskPrompt } from '../../core/PresentationUI';
 
 export const BIG_QUESTION = 'How did new factories change Shenzhen?';
 
@@ -29,8 +29,8 @@ export const WORDS: Record<string, KeyWord> = {
   factory: { term: 'factory', def: 'where goods are made' },
   goods: { term: 'goods', def: 'things you can buy' },
   tax: { term: 'tax', def: 'money paid to the government' },
-  sez: { term: 'Special Economic Zone', def: 'lower taxes help attract new factories' },
-  nic: { term: 'NIC', def: 'Newly Industrialised Country' },
+  sez: { term: 'Special Economic Zone', def: 'lower taxes help attract new factories', key: true },
+  nic: { term: 'NIC', def: 'Newly Industrialised Country', key: true },
   migration: { term: 'migration', def: 'moving from one place to live in another' },
 };
 
@@ -43,6 +43,8 @@ export interface TeachingMoment {
   title: string;
   body: string;
   words: KeyWord[];
+  /** Matching question from the Blue 1 worksheet's YOUR TASK zone. */
+  task: TaskPrompt;
   /** The model year is eased to at least this value when the moment is chosen. */
   minYear: number;
 }
@@ -55,6 +57,7 @@ export const MOMENTS: Record<Exclude<PresetId, 'overview'>, TeachingMoment> = {
     title: 'Factories create jobs',
     body: 'Lower taxes attracted companies. New factories created jobs.',
     words: [WORDS.factory, WORDS.tax, WORDS.sez],
+    task: { n: '3', q: 'Why did companies open factories in Shenzhen?', start: 'Start: In the Special Economic Zone, taxes were … so …', cmd: 'EXPLAIN' },
     minYear: 1992,
   },
   housing: {
@@ -64,6 +67,7 @@ export const MOMENTS: Record<Exclude<PresetId, 'overview'>, TeachingMoment> = {
     title: 'People move to Shenzhen',
     body: 'People moved to the city for work. More homes were needed.',
     words: [WORDS.migration],
+    task: { n: '4', q: 'How did factories help Shenzhen’s population grow?', start: 'Start: Factories created … , so more people …', cmd: 'CONNECT' },
     minYear: 2004,
   },
   skyline: {
@@ -73,6 +77,7 @@ export const MOMENTS: Record<Exclude<PresetId, 'overview'>, TeachingMoment> = {
     title: '330,000 → over 17 million',
     body: 'More jobs attracted more people. Shenzhen grew into a major city.',
     words: [WORDS.nic, WORDS.goods],
+    task: { n: '★', q: 'Use the 3-in-10 diagram. Why “the world’s factory”?', start: 'Start: China makes about … in every 10 goods, so …', cmd: 'APPLY' },
     minYear: 2020,
   },
 };
@@ -107,3 +112,9 @@ export function overviewBody(year: number): string {
   if (year < 2019.5) return 'The city keeps growing, upwards and outwards.';
   return '2020: over 17 million people live in Shenzhen.';
 }
+
+/** Worksheet header details (Blue 1). */
+export const SHEET = { lesson: 'LESSON 1 · CHINA', badge: '1', title: 'The world’s factory' };
+
+/** Overview question: Blue 1, task 2. */
+export const OVERVIEW_TASK: TaskPrompt = { n: '2', q: 'How did Shenzhen’s population change?', start: 'Start: In 1980 there were … people. By 2020 …', cmd: 'DESCRIBE' };

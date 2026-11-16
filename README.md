@@ -1,4 +1,4 @@
-# EBN Geography | China — Week 3 | 3D
+# EBN Geography | China · Week 3 | 3D
 
 An offline, teacher-controlled 3D teaching application with two simulations for
 GCSE Geography (EBN Academy 2, Autumn 2, Week 3, Blue worksheets):
@@ -9,6 +9,19 @@ GCSE Geography (EBN Academy 2, Autumn 2, Week 3, Blue worksheets):
 2. **GROUNDWATER** — *How can taking too much water dry up wells?* A geological
    cut-away driven by a water-balance model, where too much pumping lowers the
    water table until the shallow well runs dry.
+
+**House style.** The interface uses the EBN Academy 2 Geography worksheet design so
+it sits with the Week 3 resource pack:
+- the dark header with the `GEOGRAPHY · AUTUMN 2 · WEEK 3 · 1.3.3 + 3.3.2` breadcrumb
+  and stage pills (BLUE lit);
+- the blue START HERE / Big question strip;
+- the `LESSON 1 · CHINA` and `LESSON 1 · WATER` labels with BLUE 1 and BLUE 2 badges;
+- blue "words you need first" panels and yellow key words;
+- the teal 3-in-10 box;
+- the pink YOUR TASK row, which shows the matching question from the Blue sheet
+  with its command word (RECALL, DESCRIBE, EXPLAIN, CONNECT, DEFINE, APPLY).
+
+The font is Aptos (installed with Microsoft 365), falling back to Segoe UI.
 
 ---
 

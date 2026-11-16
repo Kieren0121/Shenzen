@@ -94,7 +94,11 @@ await check('Opens from file:// with the network offline and builds both scenes'
 await check('Shenzhen opening state: 1980, paused, big question, 330,000 reference highlighted', async () => {
   const s = await st(page, 'shenzhen');
   assert(Math.abs(s.yearPosition - 1980) < 1e-6 && !s.isPlaying && s.cameraPreset === 'overview', JSON.stringify(s).slice(0, 200));
-  assert(/HOW DID NEW FACTORIES/i.test(s.caption) || /How did new factories/i.test(s.caption), s.caption);
+  assert(/The world.s factory/i.test(s.caption), s.caption);
+  const q = await page.locator('.cap-question').innerText();
+  assert(/How did new factories change Shenzhen\?/.test(q), q);
+  const task = await page.locator('.cap-task').innerText();
+  assert(/YOUR TASK/.test(task) && /DESCRIBE/.test(task), task);
   assert(await page.locator('.pop-ref.active').innerText().then((t) => /330,000/.test(t)), 'start reference not active');
   assert(s.populationReference === 'start');
 });

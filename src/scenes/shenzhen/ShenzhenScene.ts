@@ -12,7 +12,7 @@ import { Archetype, AssetGroup, createArchetypes } from './BuildingAssets';
 import { CityPlan, generateCity } from './CityGenerator';
 import { MigrationFlow } from './Migration';
 import { createRoadMaterial, createRoadMesh } from './Roads';
-import { BIG_QUESTION, CHAIN, CHINA_FACT, MOMENTS, overviewBody, POPULATION, PresetId } from './ShenzhenData';
+import { BIG_QUESTION, CHAIN, CHINA_FACT, MOMENTS, OVERVIEW_TASK, overviewBody, POPULATION, PresetId, SHEET } from './ShenzhenData';
 import { createTerrain, terrainHeight } from './Terrain';
 import { Shipping, Traffic } from './Traffic';
 import { UrbanTimeline, YEAR_MAX, YEAR_MIN } from './UrbanTimeline';
@@ -420,10 +420,11 @@ export class ShenzhenScene implements TeachingScene {
     this.panelEl.style.display = this.preset === 'skyline' && y >= YEAR_MAX - 0.5 ? 'flex' : 'none';
     // teaching caption
     if (this.preset === 'overview') {
-      this.ctx.ui.setCaption({ kicker: 'Big question', title: BIG_QUESTION, body: overviewBody(y) });
+      this.ctx.ui.setCaption({ lesson: SHEET.lesson, badge: SHEET.badge, bigQuestion: BIG_QUESTION, step: { mark: '1', text: 'READ · SHENZHEN' }, title: SHEET.title, body: overviewBody(y), task: OVERVIEW_TASK });
     } else {
       const m = MOMENTS[this.preset];
-      this.ctx.ui.setCaption({ kicker: m.kicker, title: m.title, body: m.body, words: m.words, tone: this.preset === 'factories' ? 'pump' : 'default' });
+      const [mark, ...rest] = m.kicker.split(' · ');
+      this.ctx.ui.setCaption({ lesson: SHEET.lesson, badge: SHEET.badge, bigQuestion: BIG_QUESTION, step: { mark, text: rest.join(' · ').toUpperCase() }, title: m.title, body: m.body, words: m.words, task: m.task, tone: this.preset === 'factories' ? 'pump' : 'default' });
     }
   }
 

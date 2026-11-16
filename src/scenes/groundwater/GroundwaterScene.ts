@@ -27,14 +27,17 @@ const WORDS: Record<string, KeyWord> = {
   groundwater: { term: 'groundwater', def: 'water stored under the ground' },
   well: { term: 'well', def: 'a deep hole reaching groundwater' },
   pump: { term: 'pump', def: 'a machine that pulls water up' },
-  waterTable: { term: 'water table', def: 'the top of the water stored under the ground' },
-  over: { term: 'over-abstraction', def: 'taking out more water than rain replaces' },
+  waterTable: { term: 'water table', def: 'the top of the water stored under the ground', key: true },
+  over: { term: 'over-abstraction', def: 'taking out more water than rain replaces', key: true },
 };
 
 const STAGES = {
-  1: { kicker: 'Stage 1 · Balanced', title: 'Water is replaced', body: 'Rain helps replace the water taken from underground.', tone: 'water' as const, words: [WORDS.groundwater, WORDS.waterTable] },
-  2: { kicker: 'Stage 2 · Too much pumping', title: 'Over-abstraction', body: 'More water is taken out than is replaced.', tone: 'pump' as const, words: [WORDS.over] },
-  3: { kicker: 'Stage 3 · The well runs dry', title: 'The well runs dry', body: 'The water table has fallen below the well.', tone: 'warn' as const, words: [WORDS.waterTable] },
+  1: { step: 'STAGE 1 · BALANCED', title: 'Water is replaced', body: 'Rain helps replace the water taken from underground.', tone: 'water' as const, words: [WORDS.groundwater, WORDS.waterTable],
+    task: { n: '1', q: 'Where is groundwater stored?', start: 'Start: Groundwater is stored …', cmd: 'RECALL' } },
+  2: { step: 'STAGE 2 · TOO MUCH PUMPING', title: 'Over-abstraction', body: 'More water is taken out than is replaced.', tone: 'pump' as const, words: [WORDS.over, WORDS.pump],
+    task: { n: '3', q: 'What does over-abstraction mean?', start: 'Start: It means taking out more water than …', cmd: 'DEFINE' } },
+  3: { step: 'STAGE 3 · THE WELL RUNS DRY', title: 'The well runs dry', body: 'The water table has fallen below the well.', tone: 'warn' as const, words: [WORDS.waterTable, WORDS.well],
+    task: { n: '4', q: 'Explain why a well can become dry.', start: 'Start: When too much water is pumped out, … so …', cmd: 'EXPLAIN' } },
 };
 
 const CHAIN = ['Rain soaks into the ground', 'Groundwater is stored underground', 'Pumps take water out', 'Too much pumping', 'The water table falls', 'The shallow well runs dry'];
@@ -383,7 +386,7 @@ export class GroundwaterScene implements TeachingScene {
     ui.panelHost.appendChild(this.panelEl);
 
     this.chainEl = el('div', 'scene-chain chain');
-    this.chainEl.append(el('div', 'chain-title', 'How can taking too much water dry up wells?'));
+    this.chainEl.append(el('div', 'chain-title', 'Cause and effect'));
     CHAIN.forEach((c, i) => {
       const s = el('div', 'chain-step');
       s.append(el('span', 'dot'), el('span', '', c));
@@ -485,7 +488,7 @@ export class GroundwaterScene implements TeachingScene {
     const sim = this.sim;
     const stage = sim.stage;
     const st = STAGES[stage];
-    this.ctx.ui.setCaption({ kicker: st.kicker, title: st.title, body: st.body, tone: st.tone, words: st.words });
+    this.ctx.ui.setCaption({ lesson: 'LESSON 1 · WATER', badge: '2', bigQuestion: 'How can taking too much water dry up wells?', step: { mark: String(stage), text: st.step }, title: st.title, body: st.body, tone: st.tone, words: st.words, task: st.task });
     const inPct = (sim.lastRecharge / TOTAL_MAX_DEMAND) * 100;
     const outPct = (sim.extraction / TOTAL_MAX_DEMAND) * 100;
     const net = sim.netFlow;

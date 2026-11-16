@@ -1,4 +1,4 @@
-# Licences and credits — EBN Geography | China Week 3 | 3D
+# Licences and credits · EBN Geography | China Week 3 | 3D
 
 ## Third-party code bundled into the HTML file
 
@@ -42,7 +42,9 @@ Everything in both scenes is generated in code when the page opens:
   GLSL shaders written for this project.
 - Water normal map, particle sprites and well-screen texture: generated in code
   (`src/shared/ProceduralTextures.ts`, `src/scenes/groundwater/WellSystem.ts`).
-- Text uses the computer's own system fonts (Segoe UI on Windows).
+- Text uses the computer's own fonts: Aptos (Microsoft 365), falling back to Segoe UI.
+- Interface design follows the EBN Academy 2 Geography worksheet house style.
+  No logo image is included, because none was supplied.
 
 Landmark towers in the Shenzhen scene are *inspired by* the general form of
 recent Pearl River Delta skyscrapers. They are not models of, and are not
