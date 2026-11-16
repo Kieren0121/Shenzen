@@ -378,3 +378,41 @@ body[data-scene="groundwater"] .chain { padding: calc(var(--u) * 1.1) calc(var(-
 .loading-sub { display: inline-block; margin: calc(var(--u) * -1) 0 calc(var(--u) * 2.4); font-weight: 900; letter-spacing: 0.14em; font-size: calc(var(--u) * 1.5); background: var(--ebn-blue); color: #fff; padding: calc(var(--u) * 0.4) calc(var(--u) * 1); border-radius: 3px; }
 .loading-bar { background: var(--ebn-blue); }
 .chain-step, .chain-step .dot { transition: none; }
+
+/* =====================================================================
+   COMPACT PANELS (v1.2): keep the 3D model visible behind the text
+   ===================================================================== */
+.caption { max-width: min(31vw, calc(var(--u) * 52)); }
+.cap-start-tag { padding: calc(var(--u) * 0.45) calc(var(--u) * 0.9); }
+.cap-start-tag span { font-size: calc(var(--u) * 0.85); }
+.cap-start-tag b { font-size: calc(var(--u) * 1.5); }
+.cap-question { padding: calc(var(--u) * 0.5) calc(var(--u) * 1.1); font-size: calc(var(--u) * 1.45); line-height: 1.2; }
+.cap-head { gap: calc(var(--u) * 0.9); padding: calc(var(--u) * 0.8) calc(var(--u) * 1.2) 0; }
+.cap-lesson { font-size: calc(var(--u) * 0.95); padding: calc(var(--u) * 0.05) calc(var(--u) * 0.45); }
+.cap-step { margin-top: calc(var(--u) * 0.55); font-size: calc(var(--u) * 1.15); gap: calc(var(--u) * 0.55); }
+.cap-step .num { width: calc(var(--u) * 1.9); height: calc(var(--u) * 1.9); font-size: calc(var(--u) * 1.05); }
+.cap-title { margin-top: calc(var(--u) * 0.3); font-size: calc(var(--u) * 3.0); line-height: 1.05; }
+.cap-badge { width: calc(var(--u) * 4.6); height: calc(var(--u) * 4.6); border-radius: calc(var(--u) * 0.5); }
+.cap-badge span { font-size: calc(var(--u) * 0.85); }
+.cap-badge b { font-size: calc(var(--u) * 2.5); margin-top: calc(var(--u) * 0.1); }
+.cap-main { padding: 0 calc(var(--u) * 1.2) calc(var(--u) * 0.9); }
+.cap-body { font-size: calc(var(--u) * 1.7); line-height: 1.25; margin-top: calc(var(--u) * 0.5); }
+.cap-words { gap: calc(var(--u) * 0.5); margin-top: calc(var(--u) * 0.7); }
+.word { padding: calc(var(--u) * 0.3) calc(var(--u) * 0.7); font-size: calc(var(--u) * 1.2); border-left-width: calc(var(--u) * 0.35); }
+.word-term { font-size: calc(var(--u) * 1.35); }
+.task-head { padding: calc(var(--u) * 0.3) calc(var(--u) * 1.2); font-size: calc(var(--u) * 1.25); }
+.task-book { font-size: calc(var(--u) * 0.9); }
+.task-row { gap: calc(var(--u) * 0.7); padding: calc(var(--u) * 0.5) calc(var(--u) * 1.2) calc(var(--u) * 0.6); }
+.task-n { width: calc(var(--u) * 2.1); height: calc(var(--u) * 2.1); font-size: calc(var(--u) * 1.1); }
+.task-q b { font-size: calc(var(--u) * 1.4); line-height: 1.2; }
+.task-q span { font-size: calc(var(--u) * 1.1); }
+.task-cmd { font-size: calc(var(--u) * 0.95); }
+
+.chain { cursor: pointer; padding: calc(var(--u) * 0.8) calc(var(--u) * 1.1); gap: calc(var(--u) * 0.25); max-width: calc(var(--u) * 40); }
+.chain-title { font-size: calc(var(--u) * 1.05); margin-bottom: calc(var(--u) * 0.15); display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 1.2); }
+.chain-title::after { content: "▴ less"; font-size: calc(var(--u) * 0.9); letter-spacing: 0.08em; color: #8a95a1; }
+.chain-step, body[data-scene="groundwater"] .chain-step { font-size: calc(var(--u) * 1.45); gap: calc(var(--u) * 0.6); }
+.chain-step .dot { width: calc(var(--u) * 1.0); height: calc(var(--u) * 1.0); }
+.chain-arrow { font-size: calc(var(--u) * 0.95); }
+.chain.compact .chain-step:not(.now), .chain.compact .chain-arrow { display: none; }
+.chain.compact .chain-title::after { content: "▾ all steps"; }

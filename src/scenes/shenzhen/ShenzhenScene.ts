@@ -291,7 +291,10 @@ export class ShenzhenScene implements TeachingScene {
     ui.panelHost.appendChild(this.panelEl);
 
     // cause -> effect chain
-    this.chainEl = el('div', 'scene-chain chain');
+    this.chainEl = el('div', 'scene-chain chain compact');
+    this.chainEl.title = 'Click to show or hide every step';
+    // compact by default (current step only) so the model stays visible; click to expand
+    this.chainEl.addEventListener('click', () => this.chainEl.classList.toggle('compact'));
     this.chainEl.append(el('div', 'chain-title', 'Cause and effect'));
     CHAIN.forEach((c, i) => {
       const s = el('div', 'chain-step');
