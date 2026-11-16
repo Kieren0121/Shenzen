@@ -271,7 +271,8 @@ await check('H hides/shows controls; F enters presentation mode; Esc leaves it',
   const p1 = await page.evaluate(() => ({ presenting: window.__ebn.presenting(), fs: !!document.fullscreenElement, cls: document.body.classList.contains('presenting') }));
   assert(p1.presenting && p1.cls, 'F did not enter presentation mode');
   await page.keyboard.press('Escape');
-  await page.waitForTimeout(500);
+  // leaving browser full screen waits for repaints, which take seconds on the CPU test renderer
+  await page.waitForFunction(() => !window.__ebn.presenting() && !document.fullscreenElement, null, { timeout: 60000 }).catch(() => undefined);
   const p2 = await page.evaluate(() => ({ presenting: window.__ebn.presenting(), fs: !!document.fullscreenElement }));
   assert(!p2.presenting && !p2.fs, 'Esc did not leave presentation mode');
   return `browser full-screen granted: ${p1.fs}`;
