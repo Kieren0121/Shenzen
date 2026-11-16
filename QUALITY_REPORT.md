@@ -1,6 +1,6 @@
-# Quality report — EBN Geography | China Week 3 | 3D
+# Quality report · EBN Geography | China Week 3 | 3D
 
-Version 1.0 · 15 November 2026 · Deliverable `EBN_Geography_China_Week3_3D.html`
+Version 1.1 · 16 November 2026 (EBN house style applied; see §2.4) · Deliverable `EBN_Geography_China_Week3_3D.html`
 (single file, ≈0.7 MB, three.js r170 bundled).
 
 This report separates **what was measured or verified** from **what could not be
@@ -149,6 +149,46 @@ Issues found by inspecting renders, and fixed:
 - missing well, water-table and unsaturated-zone labels.
 
 Each fix was checked by rendering again.
+
+### 2.4 House style (v1.1) and rerun
+
+The interface was restyled to the EBN Academy 2 Geography worksheet design, so
+the model reads as part of the Week 3 resource pack:
+
+- the dark header with the `GEOGRAPHY · AUTUMN 2 · WEEK 3 · 1.3.3 + 3.3.2` breadcrumb;
+- the STARTER · **BLUE** · WHITE · YELLOW · WRITING · GCSE stage pills;
+- the START HERE / Big question strip;
+- the `LESSON 1 · CHINA` and `LESSON 1 · WATER` labels with BLUE 1 and BLUE 2 badges;
+- numbered blue section heads;
+- blue "words you need first" panels and yellow-highlighted key words;
+- the teal 3-in-10 diagram;
+- the pink YOUR TASK row, which shows the matching Blue-sheet question and its
+  command word;
+- worksheet-style white diagram labels.
+
+Further details:
+
+- **Colours:** the worksheet palette (#1A66C9, #16202B, #F7C93A, #E0007A,
+  #0B7574 and their tints).
+- **Font:** Aptos, falling back to Segoe UI.
+- **Em dashes:** removed from all interface text.
+- **Logo:** none is included, because neither the worksheet nor the
+  house-style skills contain an EBN logo file.
+
+**Rerun on the v1.1 build:**
+- Unit tests: 15 / 15 pass.
+- Browser tests: 19 / 19 pass, with 0 network requests and 0 script errors
+  (ready in 1.4 s).
+- Fresh 1920×1080 and layout screenshots are in the source ZIP.
+
+The test file had two harness-only changes:
+
+1. The caption checks now look for the new title, Big question strip and
+   YOUR TASK row.
+2. The Esc check now waits for the browser to leave full screen, instead of a
+   fixed 0.5 s pause. On the CPU renderer, that full-screen exit takes about
+   20 s to repaint. A separate run measured 12 ms for the app's own Esc handler
+   when the browser had not yet granted full screen.
 
 ## 3. Environment and performance (honest limits)
 
