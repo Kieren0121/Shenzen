@@ -95,9 +95,31 @@ Test 15 found real defects during development, which were then fixed:
 
 Run against `dist/EBN_Geography_China_Week3_3D.html` opened from **file://**,
 with `context.setOffline(true)` and every non-file request intercepted and
-aborted. Results: see §2.3 (copied from `tests/output/e2e-results.json`).
+aborted. Results (copied from `tests/output/e2e-results.json`):
 
-__E2E_RESULTS__
+**19 passed, 0 failed** — 2026-11-16, Chromium 153.0.8010.12, WebGL renderer: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver).
+
+| Result | Test | Notes |
+|---|---|---|
+| PASS | Deliverable is one self-contained HTML (no external src/href, no module scripts) | 691 KB |
+| PASS | Opens from file:// with the network offline and builds both scenes | ready in 1.2 s |
+| PASS | Shenzhen opening state: 1980, paused, big question, 330,000 reference highlighted |  |
+| PASS | Play button runs the timeline; Space pauses and the year freezes | advanced to 1981.00 |
+| PASS | Timeline slider scrubs; 2020 jump shows the "over 17 million" reference only at the endpoint |  |
+| PASS | Teaching moments A/B/C: camera flies, captions and highlights match the worksheet | factories → housing → skyline |
+| PASS | Keyboard R resets the scene to 1980 / overview |  |
+| PASS | Double-click on the model starts a smooth focus flight |  |
+| PASS | Camera limits: extreme zoom-out and orbit stay within bounds | distance 10500 m, height 1279 m |
+| PASS | Key 2 switches to Groundwater: Stage 1 balanced, both wells pumping, table steady |  |
+| PASS | Water extraction slider → over-abstraction; water table falls step by step | 41.971 → 41.854 m |
+| PASS | Pause freezes the simulation without resetting it |  |
+| PASS | Shallow well runs dry only when the water table reaches its intake; warning label appears | after 1158 model days; table 35.06 m |
+| PASS | Reducing extraction lets the aquifer recover; Reset scenario restores the start exactly |  |
+| PASS | Repeated scene switching (40×) leaks no GPU resources or listeners | geometries 155, textures 10, programs 19, heap 33 MB |
+| PASS | H hides/shows controls; F enters presentation mode; Esc leaves it | browser full-screen granted: true |
+| PASS | Keyboard shortcuts do not fire while typing in a text field |  |
+| PASS | No network requests and no script errors during the whole session | 0 requests, 0 errors |
+| PASS | Without WebGL the page shows a helpful message instead of a blank screen |  |
 
 ### 2.3 Visual inspection (real renders, reviewed by eye)
 
